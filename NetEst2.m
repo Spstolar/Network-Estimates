@@ -42,21 +42,21 @@ m = L(1);
 % I(m+1:m+L(2),m+1:m+L(2)) = eye(L(2))
 
 I;
-TC
+TC;
 
 
 %defining for the rest of the layers
 for k = 3:K
     for v = (m+L(k-1)+1):(m+L(k-1)+L(k))
         
-        I
+        I;
         
         %the matrix of layer 1 weights that layer k-1 is using
-        P = I(1:L(1),m+1:m+L(k-1))
+        P = I(1:L(1),m+1:m+L(k-1));
         
         %the matrix telling us who agent i of layer k is receiving info
         %from
-        r = TC(m+1:m+L(k-1),v)
+        r = TC(m+1:m+L(k-1),v);
         
         %J to index going to each elt of the previous layer and asking if they are
         %sending info
@@ -75,7 +75,7 @@ for k = 3:K
         %info, then add their weights to the matrix Q.
         for i = 1:J
             if r(i) == 1
-                Q(:,nextcol) = P(:,i)
+                Q(:,nextcol) = P(:,i);
                 nextcol = nextcol +1;
             end 
         end
@@ -86,19 +86,19 @@ for k = 3:K
             end
         end
 
-        WF
-        IWF = inv(WF)
+        WF;
+        IWF = inv(WF);
 
         b = (ones(1,R)*IWF*ones(R,1));
 
-        weights = ones(1,R)*IWF/b
+        weights = ones(1,R)*IWF/b;
         
         est = zeros(L(1),1);
         
         for l = 1:R
-            est = est + weights(l)*Q(:,l)
+            est = est + weights(l)*Q(:,l);
         end
-        I(1:L(1),v) = est
+        I(1:L(1),v) = est;
         
         recw = 1;
         for p = 1:J
