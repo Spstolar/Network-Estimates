@@ -15,7 +15,7 @@ for r = 1:runs
     for n = 1:L(1)
         EstErrors(n,1) = InitialWeights(n,1).^2;
     end
-    error = sum(EstErrors)
+    error = sum(EstErrors)/L(1)
     TrialErrors(1,r) = error;
 end
 

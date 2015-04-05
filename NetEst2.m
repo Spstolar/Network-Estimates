@@ -39,11 +39,6 @@ end
 
 m = L(1);
 
-% I(m+1:m+L(2),m+1:m+L(2)) = eye(L(2))
-
-I;
-TC;
-
 
 %defining for the rest of the layers
 for k = 3:K
@@ -87,6 +82,25 @@ for k = 3:K
         end
 
         WF;
+        if det(WF) == 0
+            %delete minimal number of rows and columns alg
+                %starting with checking if we can get by with 1 row and
+                %then increasing till the max required deletions
+            deWF = WF
+            for e = 1:R
+                deWF(e,:) = [];
+                deWF(:,e) = [];
+                if det(deWF) == 0
+                    deWF = WF;
+                else
+                    cWF = deWF;
+                    deWF = WF;
+                end
+            end
+            WF = cWF;
+            
+        end
+        
         IWF = inv(WF);
 
         b = (ones(1,R)*IWF*ones(R,1));
