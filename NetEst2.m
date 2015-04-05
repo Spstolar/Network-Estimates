@@ -1,4 +1,4 @@
-function [ x ] = NetEst1( C, L)
+function [ x ] = NetEst2( C, L)
 %NetEst1 Calculting estimates given the connection matrix, and for now
 %assuming equal variance of 1 for the top layer.
 
