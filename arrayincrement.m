@@ -15,7 +15,7 @@ if carry == 1
                 a(j) = 1;
                 a(j+1) = a(j+1) + 1;
             else
-                carry == 0;
+                carry = 0;
             end
         end
     end

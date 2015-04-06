@@ -5,9 +5,9 @@ function[x, y] = desing(B)
 %invertible matrix 
 % The resulting matrix is x, and y keeps track of what we removed.
 
-y = [0];
+y = 0;
 WF = B;
-[R s] = size(WF);
+[R, ~] = size(WF);
 
 det(B);
 
@@ -17,7 +17,7 @@ if singcheck(WF) == 1
     repaired = 0;
 else
     repaired = 1;
-    y = [0];
+    y = 0;
 end
 
 if repaired == 0
@@ -37,7 +37,7 @@ end
 if repaired == 0
     if R==3
         %see if deleting one row and column works
-        check = singcheck(delagents(WF,[1]))+singcheck(delagents(WF,[2]))+singcheck(delagents(WF,[3]));
+        check = singcheck(delagents(WF, 1))+singcheck(delagents(WF, 2))+singcheck(delagents(WF, 3));
         if check == 3
             %del 2 at a time
             if cond(delagents(WF,[1 2])) ~= inf
@@ -53,15 +53,15 @@ if repaired == 0
                 end
             end
         else
-            if singcheck(delagents(WF,[1])) == 1
-                WF = delagents(WF,[1]);
+            if singcheck(delagents(WF,1)) == 1
+                WF = delagents(WF,1);
                 y = 1;
             else
-                if singcheck(delagents(WF,[2])) == 1
-                    WF = delagents(WF,[2]);
+                if singcheck(delagents(WF, 2)) == 1
+                    WF = delagents(WF, 2);
                     y = 2;
                 else
-                    WF = delagents(WF,[3]);
+                    WF = delagents(WF,3);
                     y = 3;
                 end
             end
@@ -78,8 +78,8 @@ end
 if repaired == 0
     for f = 1:R
         if repaired == 0
-            if singcheck(delagents(WF,[f])) == 1
-                WF = delagents(WF,[f]);
+            if singcheck(delagents(WF, f)) == 1
+                WF = delagents(WF, f);
                 repaired = 1;
                 y = f;
             end
@@ -127,5 +127,5 @@ if repaired == 0
 end
 
 x = WF;
-y;
+%y;
 

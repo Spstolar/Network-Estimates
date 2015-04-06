@@ -1,3 +1,3 @@
-function[x] = sing(A)
+function[x] = singcheck(A)
 
 x = (cond(A) == inf) | (abs(cond(A)) < 10^-10) | (cond(A) > 10^10);

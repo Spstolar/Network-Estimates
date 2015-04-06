@@ -85,8 +85,9 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
         %WF is the RxR covariance matrix, which may be singular
         %Check if it's singular, and if it is de-singularize it, where we
         %keep track of what we removed from WF
-        isitsing = singcheck(WF);
-        cond(WF);
+     
+        %isitsing = singcheck(WF);
+        %cond(WF);                  %<-- for debugging
         
         
         if singcheck(WF) == 1
@@ -96,14 +97,14 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
 
 %          WF might have been resized;
         inR = R;
-        [R s] = size(WF);
+        [R, ~] = size(WF);
         
-        IWF = inv(WF);
+        %IWF = inv(WF);    %replaced inv(WF) below with /WF
 
-        b = (ones(1,R)*IWF*ones(R,1));
+        b = (ones(1,R)/WF)*ones(R,1);
 
         
-        weights = ones(1,R)*IWF/b;
+        weights = (ones(1,R)/WF)/b;
         fillw = zeros(1,inR);
         
         %we have to add in some zeros if we reduced the covariance matrix

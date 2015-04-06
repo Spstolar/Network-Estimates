@@ -3,7 +3,6 @@ function[ z ] = ConnectionTester(L,ConnNums,runs)
 % input L = the vector of layers and ConnNums = how many connects each member of
 %the layer has to the next layer
 
-runs
 TrialErrors = zeros(1,runs);
 
 
@@ -21,7 +20,7 @@ for r = 1:runs
     TrialErrors(1,r) = error;
 end
 
-TrialErrors;
+%TrialErrors;
 
 w = histogram(TrialErrors,100);
 
