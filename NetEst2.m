@@ -2,27 +2,28 @@ function [ x ] = NetEst2( C, L)
 %NetEst1 Calculting estimates given the connection matrix, and for now
 %assuming equal variance of 1 for the top layer.
 
-%C is the matrix of connections, column i tells you who agent i sends info
-%to
+%C is the matrix of connections:
+%column i tells you who agent i sends info to
+
 %L is the vector that tell you how many agents are in each layer. L(i) is
-%the number of agents in layer i, so L = [L(1) L(2) ... L(num of layers)
+%the number of agents in layer i, so L = [L(1) L(2) ... L(num of layers)]
 
 
 %It's good to test this on 
 %C = ConnectionMatrix(8,[1 4],[2 4 5],[3 5],[4 6],[5 7],[6 8],[7 8])
 %L = [3 2 2 1]
 
-N = sum(L);             %number of agents
+N = sum(L);             %total number of agents
 I = zeros(N,N);         %initial info matrix
 K = length(L);          %number of layers
 
 
-%the matrix whose column i tell you who agent i receives info from
+%this gives the matrix whose column i tell you who agent i receives info from
 TC = transpose(C);
 
 
 %The first a second layers are easier to compute directly, so we do those
-%and leave the third and on layers to the algorithm which uses covariance
+%and leave the third and on layers to an algorithm which uses covariance
 %matrices
 
 %define the info matrix for the top layer
@@ -41,23 +42,23 @@ m = L(1);
 
 
 %defining for the rest of the layers
-for k = 3:K
-    for v = (m+L(k-1)+1):(m+L(k-1)+L(k))
-        
-        I;
+for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
+    for v = (m+L(k-1)+1):(m+L(k-1)+L(k))   %going through each agent of layer k
         
         %the matrix of layer 1 weights that layer k-1 is using
         P = I(1:L(1),m+1:m+L(k-1));
         
-        %the matrix telling us who agent i of layer k is receiving info
-        %from
+        %the column for agent i of layer k telling us who the is receiving 
+        %info from
         r = TC(m+1:m+L(k-1),v);
         
         %J to index going to each elt of the previous layer and asking if they are
         %sending info
-        %R to index the matrix we'll use to build the covariance matrix
+        %R = number of people who send info to the agent
+        % we use to index the matrix we'll use to build the covariance matrix
         J = length(r);
         R = sum(r);
+        
         %setting up the matrices we use to build the covariance matrix WF
         Q = zeros(L(1),R);
         WF = zeros(R,R);
@@ -67,7 +68,7 @@ for k = 3:K
 
 
         %Goes through the people in the layer above. If they are giving this agent
-        %info, then add their weights to the matrix Q.
+        %info, then adds their weights to the matrix Q.
         for i = 1:J
             if r(i) == 1
                 Q(:,nextcol) = P(:,i);
@@ -81,33 +82,45 @@ for k = 3:K
             end
         end
 
-        [WF, removed] = desing(WF)
-%         det(WF)
-%         cond(WF)
+        %WF is the RxR covariance matrix, which may be singular
+        %Check if it's singular, and if it is de-singularize it, where we
+        %keep track of what we removed from WF
+        isitsing = singcheck(WF)
+        cond(WF)
+        
+        
+        if singcheck(WF) == 1
+            [WF, removed] = desing(WF)
+        end
+
 
 %          WF might have been resized;
-        inR = R;
-        [R s] = size(WF);
+        inR = R
+        [R s] = size(WF)
         
-        IWF = inv(WF);
+        IWF = inv(WF)
 
-        b = (ones(1,R)*IWF*ones(R,1));
+        b = (ones(1,R)*IWF*ones(R,1))
 
         
-        weights = ones(1,R)*IWF/b;
-        fillw = zeros(1,inR);
+        weights = ones(1,R)*IWF/b
+        fillw = zeros(1,inR)
         
         %we have to add in some zeros if we reduced the covariance matrix
-        if inR < R
+        if R < inR
             p = 1;
             q = 1;
-            for o = 1:inR
-                if o == removed(p)
-                    fillw(o) = 0;
-                    p = p + 1;
+            for fillspot = 1:inR
+                if fillspot == removed(p)
+                    fillw(fillspot) = 0
+                    if p == length(removed)
+                        removed(p) = 0;
+                    else
+                        p = p + 1
+                    end
                 else
-                    fillw(o) = weights(q);
-                    q = q + 1;
+                    fillw(fillspot) = weights(q)
+                    q = q + 1
                 end
             end    
             weights = fillw

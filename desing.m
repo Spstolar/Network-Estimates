@@ -13,7 +13,7 @@ det(B);
 
 
 
-if cond(WF) == inf
+if singcheck(WF) == 1
     repaired = 0;
 else
     repaired = 1;
@@ -37,8 +37,8 @@ end
 if repaired == 0
     if R==3
         %see if deleting one row and column works
-        check = max([cond(delagents(WF,[1])),cond(delagents(WF,[2])),cond(delagents(WF,[3]))]);
-        if check == 0
+        check = singcheck(delagents(WF,[1]))+singcheck(delagents(WF,[2]))+singcheck(delagents(WF,[3]));
+        if check == 3
             %del 2 at a time
             if cond(delagents(WF,[1 2])) ~= inf
                 WF = delagents(WF,[1 2]);
@@ -53,11 +53,11 @@ if repaired == 0
                 end
             end
         else
-            if cond(delagents(WF,[1])) ~= inf
+            if singcheck(delagents(WF,[1])) == 1
                 WF = delagents(WF,[1]);
                 y = 1;
             else
-                if cond(delagents(WF,[2])) ~= inf
+                if singcheck(delagents(WF,[2])) == 1
                     WF = delagents(WF,[2]);
                     y = 2;
                 else
@@ -78,7 +78,7 @@ end
 if repaired == 0
     for f = 1:R
         if repaired == 0
-            if cond(delagents(WF,[f])) ~= inf
+            if singcheck(delagents(WF,[f])) == 1
                 WF = delagents(WF,[f]);
                 repaired = 1;
                 y = f;
@@ -111,7 +111,7 @@ if repaired == 0
             a = ones(1,e);
             while a(e)+a(e-1) < 2*R
                 WF = delagents(WF,a);
-                if cond(WF) == inf
+                if singcheck(WF) == 1
                     a = arrayincrement(a,R);
                     WF = B;
                 else
