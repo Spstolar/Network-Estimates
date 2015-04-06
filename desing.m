@@ -4,7 +4,6 @@ function[x, y] = desing(B)
 %not invertible removes as few rows and columns as possible to get an 
 %invertible matrix 
 % The resulting matrix is x, and y keeps track of what we removed.
-
 y = 0;
 WF = B;
 [R, ~] = size(WF);
@@ -40,11 +39,11 @@ if repaired == 0
         check = singcheck(delagents(WF, 1))+singcheck(delagents(WF, 2))+singcheck(delagents(WF, 3));
         if check == 3
             %del 2 at a time
-            if cond(delagents(WF,[1 2])) ~= inf
+            if singcheck(delagents(WF,[1 2])) == 1
                 WF = delagents(WF,[1 2]);
                 y = [1 2];
             else
-                if cond(delagents(WF,[2 3])) ~= inf
+                if singcheck(delagents(WF,[2 3])) == 1
                     WF = delagents(WF,[2 3]);
                     y = [2 3];
                 else

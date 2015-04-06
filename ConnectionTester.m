@@ -24,4 +24,4 @@ end
 
 w = histogram(TrialErrors,100);
 
-z = w;
+z = sum(TrialErrors);
