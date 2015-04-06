@@ -4,12 +4,12 @@ function[ z ] = ConnectionTester(L,ConnNums,runs)
 %the layer has to the next layer
 
 runs
-TrialErrors = zeros(1,runs)
+TrialErrors = zeros(1,runs);
 
 
 for r = 1:runs
-    InfoMatrix = NetEst2(ConnectGen(L, ConnNums),L)
-%     InitialWeights = InfoMatrix(1:L(1),sum(L));
+    InfoMatrix = NetEst2(ConnectGen(L, ConnNums),L);
+    InitialWeights = InfoMatrix(1:L(1),sum(L))
 %     opt = 1/L(1);
 %     bestweights = opt*ones(L(1),1);
 %     InitialWeights = InitialWeights - bestweights;
@@ -21,7 +21,7 @@ for r = 1:runs
 %     TrialErrors(1,r) = error;
 end
 
-TrialErrors
+TrialErrors;
 
 w = histogram(TrialErrors,10);
 

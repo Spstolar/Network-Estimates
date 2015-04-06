@@ -85,26 +85,26 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
         %WF is the RxR covariance matrix, which may be singular
         %Check if it's singular, and if it is de-singularize it, where we
         %keep track of what we removed from WF
-        isitsing = singcheck(WF)
-        cond(WF)
+        isitsing = singcheck(WF);
+        cond(WF);
         
         
         if singcheck(WF) == 1
-            [WF, removed] = desing(WF)
+            [WF, removed] = desing(WF);
         end
 
 
 %          WF might have been resized;
-        inR = R
-        [R s] = size(WF)
+        inR = R;
+        [R s] = size(WF);
         
-        IWF = inv(WF)
+        IWF = inv(WF);
 
-        b = (ones(1,R)*IWF*ones(R,1))
+        b = (ones(1,R)*IWF*ones(R,1));
 
         
-        weights = ones(1,R)*IWF/b
-        fillw = zeros(1,inR)
+        weights = ones(1,R)*IWF/b;
+        fillw = zeros(1,inR);
         
         %we have to add in some zeros if we reduced the covariance matrix
         if R < inR
@@ -112,18 +112,18 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
             q = 1;
             for fillspot = 1:inR
                 if fillspot == removed(p)
-                    fillw(fillspot) = 0
+                    fillw(fillspot) = 0;
                     if p == length(removed)
                         removed(p) = 0;
                     else
-                        p = p + 1
+                        p = p + 1;
                     end
                 else
-                    fillw(fillspot) = weights(q)
-                    q = q + 1
+                    fillw(fillspot) = weights(q);
+                    q = q + 1;
                 end
             end    
-            weights = fillw
+            weights = fillw;
         end
         
         
