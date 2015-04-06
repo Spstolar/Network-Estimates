@@ -1,4 +1,12 @@
-# Network-Estimates Update 4.5.15
+# Network-Estimates Update No.2 4.5.15
+Working on issue of singular covariance matrix. Have a fix, but it doesn't seem to be stable. One of the main issues with this is determining when the matrix is singular. cond(A) alone doesn't work because the result can be different than Inf and still be inputted singular matrices.
+
+A second issue seems to be happening when delagents.m is used, resulting in a row and column of NaNs. Testing this might be a good first step into seeing what's causing the SVD issue.
+
+~Simon
+
+
+# Network-Estimates Update No.1 4.5.15
 
 To run trials of what the final estimates are going to be, we do not need the connect matrix codes.
 
