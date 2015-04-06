@@ -81,35 +81,42 @@ for k = 3:K
             end
         end
 
-        WF;
-        if det(WF) == 0
-            %delete minimal number of rows and columns alg
-                %starting with checking if we can get by with 1 row and
-                %then increasing till the max required deletions
-            deWF = WF
-            for e = 1:R
-                deWF(e,:) = [];
-                deWF(:,e) = [];
-                if det(deWF) == 0
-                    deWF = WF;
-                else
-                    cWF = deWF;
-                    deWF = WF;
-                end
-            end
-            WF = cWF;
-            
-        end
+        [WF, removed] = desing(WF)
+%         det(WF)
+%         cond(WF)
+
+%          WF might have been resized;
+        inR = R;
+        [R s] = size(WF);
         
         IWF = inv(WF);
 
         b = (ones(1,R)*IWF*ones(R,1));
 
+        
         weights = ones(1,R)*IWF/b;
+        fillw = zeros(1,inR);
+        
+        %we have to add in some zeros if we reduced the covariance matrix
+        if inR < R
+            p = 1;
+            q = 1;
+            for o = 1:inR
+                if o == removed(p)
+                    fillw(o) = 0;
+                    p = p + 1;
+                else
+                    fillw(o) = weights(q);
+                    q = q + 1;
+                end
+            end    
+            weights = fillw
+        end
+        
         
         est = zeros(L(1),1);
         
-        for l = 1:R
+        for l = 1:inR
             est = est + weights(l)*Q(:,l);
         end
         I(1:L(1),v) = est;
