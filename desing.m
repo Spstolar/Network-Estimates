@@ -1,7 +1,7 @@
 function[x, y] = desing(B)
 
 %  takes a matrix B, tests invertibility, then if it's 
-%not invertible removes as few rows and columns as possible to get an 
+%not invertible removes as few row(i)+column(i) combinations as possible to get an 
 %invertible matrix 
 % The resulting matrix is x, and y keeps track of what we removed.
 y = 0;
@@ -14,6 +14,7 @@ det(B);
 
 if singcheck(WF) == 1
     repaired = 0;
+    WF;
 else
     repaired = 1;
     y = 0;
@@ -77,7 +78,7 @@ end
 if repaired == 0
     for f = 1:R
         if repaired == 0
-            if singcheck(delagents(WF, f)) == 1
+            if singcheck(delagents(WF, f)) == 0
                 WF = delagents(WF, f);
                 repaired = 1;
                 y = f;
