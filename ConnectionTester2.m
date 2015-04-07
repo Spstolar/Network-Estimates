@@ -3,8 +3,9 @@ function[ z ] = ConnectionTester2(L,ConnNums,runs)
 % input L = the vector of layers and ConnNums = how many connects each member of
 %the layer has to the next layer
 
-%TrialErrors = zeros(1,runs)
+
 error = 0;
+TrialErrors = zeros(1,runs);
 
 for r = 1:runs
     InfoMatrix = NetEst2(ConnectGen(L, ConnNums),L);
@@ -16,11 +17,12 @@ for r = 1:runs
     for n = 1:L(1)
         EstErrors(n,1) = InitialWeights(n,1).^2;
     end
-    error = error + sum(EstErrors)/L(1)
+    error = error + sum(EstErrors)/L(1);
+    TrialErrors(r) = error;
 end
 
 
 
-%w = histogram(TrialErrors,10);
+w = histogram(TrialErrors,10);
 
 z = error./runs;
