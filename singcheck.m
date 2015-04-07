@@ -16,9 +16,15 @@ function[x] = singcheck(A)
 %     end
 % end
 
+%determinant method
+if det(A) == 0
+    x = 1;
+    done == 1;
+end
+
 %Conditioning method.
 if done == 0
-    x = (det(A) == 0) | (cond(A) == inf) | (abs(cond(A)) < 10^-10) | (cond(A) > 10^10) | (isnan(cond(A)));
+    x = (cond(A) == inf) | (abs(cond(A)) < 10^-10) | (cond(A) > 10^10) | (isnan(cond(A))) | (rcond(A) < 10^-10);
 end
 
 %Eigenvalue method.

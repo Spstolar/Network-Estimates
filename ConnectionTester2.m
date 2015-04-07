@@ -23,6 +23,6 @@ end
 
 
 
-w = histogram(TrialErrors,10);
+%w = histogram(TrialErrors,10);
 
 z = error./runs;

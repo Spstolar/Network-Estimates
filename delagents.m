@@ -24,10 +24,10 @@ end
             
 if repeat == 0            
     a = sort(a,'descend');
+    alength = length(a);
 
 
-
-    for i = 1:length(a)
+    for i = 1:alength
         C(:,a(i)) = [];
         C(a(i),:) = [];
     end
