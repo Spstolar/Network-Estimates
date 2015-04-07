@@ -22,6 +22,6 @@ end
 
 %TrialErrors;
 
-w = histogram(TrialErrors,100);
+histogram(TrialErrors,100);
 
 z = sum(TrialErrors);

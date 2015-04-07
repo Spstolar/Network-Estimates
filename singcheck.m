@@ -13,7 +13,15 @@ for m = 1:M
         end
     end
 end
+% 
+% if done == 0
+%     x = (cond(A) == inf) | (abs(cond(A)) < 10^-10) | (cond(A) > 10^10) | (isnan(cond(A)));
+% end
 
 if done == 0
-    x = (cond(A) == inf) | (abs(cond(A)) < 10^-10) | (cond(A) > 10^10) | (isnan(cond(A)));
+    if prod(eig(A)) == 0
+        x = 1;
+    else 
+        x = 0;
+    end
 end
