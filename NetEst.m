@@ -1,4 +1,4 @@
-function [ x , covdet] = NetEst2( C, L)
+function [ x , var] = NetEst( C, L)
 %NetEst1 Calculting estimates given the connection matrix, and for now
 %assuming equal variance of 1 for the top layer.
 
@@ -155,8 +155,11 @@ end
 
 
 
-
-covdet = det(WF);  %determinant for the final agent's covariance matrix
+% WF
+% inv(WF)
+% sum(sum(inv(WF)))
+% 1/sum(sum(inv(WF)))
+var = 1/sum(sum(inv(WF)))  %determinant for the final agent's covariance matrix
 
         
 x = I;
