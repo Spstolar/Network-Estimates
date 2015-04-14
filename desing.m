@@ -22,7 +22,7 @@ end
 
 if repaired == 0
     if R == 2
-        if B(1,1) > B(2,2)
+        if B(1,1) > B(2,2)   %since we are only using matrices whose diagonal entries are positive, this check suffices
             repaired = 1;
             y = 2;
             WF = B(1,1);
@@ -40,24 +40,27 @@ if repaired == 0
         check = singcheck(delagents(WF, 1))+singcheck(delagents(WF, 2))+singcheck(delagents(WF, 3));
         if check == 3
             %del 2 at a time
-            if singcheck(delagents(WF,[1 2])) == 1
-                WF = delagents(WF,[1 2]);
-                y = [1 2];
-            else
-                if singcheck(delagents(WF,[2 3])) == 1
-                    WF = delagents(WF,[2 3]);
-                    y = [2 3];
-                else
-                    WF = delagents(WF,[1 3]);
-                    y = [1 3];
-                end
-            end
+            %since all that is left is the diagonal entry, the choice is irrelevant
+            WF = delagents(WF,[1 2]);
+            y = [1 2];
+%             if singcheck(delagents(WF,[1 2])) == 0 
+%                 WF = delagents(WF,[1 2]);
+%                 y = [1 2];
+%             else
+%                 if singcheck(delagents(WF,[2 3])) == 0
+%                     WF = delagents(WF,[2 3]);
+%                     y = [2 3];
+%                 else
+%                     WF = delagents(WF,[1 3]);
+%                     y = [1 3];
+%                 end
+%             end
         else
-            if singcheck(delagents(WF,1)) == 1
+            if singcheck(delagents(WF,1)) == 0
                 WF = delagents(WF,1);
                 y = 1;
             else
-                if singcheck(delagents(WF, 2)) == 1
+                if singcheck(delagents(WF, 2)) == 0
                     WF = delagents(WF, 2);
                     y = 2;
                 else
@@ -90,8 +93,10 @@ end
 
 if repaired == 0
     for e = 2:R-1
-        %we have to delete anywhere from 1 row and column to R-1 rows and
-        %columns
+        %deleting an agent means to delete the row and column for the
+        %agent's position
+        %we have to delete anywhere from [2 rows and 2 columns] to [R-1 rows and
+        %R-1 columns]
         % When the deletion is invertible, we are done and have reached a
         % minimal e. Once there, we set: repaired = 1
         
@@ -109,16 +114,22 @@ if repaired == 0
         %while det(WF) == 0
         if repaired == 0
             a = ones(1,e);
+            for s = 1:e
+                a(s) = s;
+            end
             while a(e)+a(e-1) < 2*R
                 WF = delagents(WF,a);
-                if singcheck(WF) == 1
+                if size(WF) == size(B) %skip redudant deletions
                     a = arrayincrement(a,R);
-                    WF = B;
-                else
-                    repaired = 1;
-                    B = WF;
-                    y = sort(a);   %ordering the agents we removed
-                    a(1) = R*e;    %ensuring the end of the while loop
+                else                  
+                    if singcheck(WF) == 1
+                        a = arrayincrement(a,R);
+                        WF = B;
+                    else
+                        repaired = 1;
+                        y = sort(a);   %ordering the agents we removed
+                        a(e) = R*e+3;    %ensuring the end of the while loop
+                    end
                 end
             end
         end

@@ -19,7 +19,7 @@ function[x] = singcheck(A)
 %determinant method
 if det(A) == 0
     x = 1;
-    done == 1;
+    done = 1;
 end
 
 %Conditioning method.

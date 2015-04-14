@@ -14,7 +14,7 @@ runs = 100;
 numofconnections = [1:L(2)];
 error = zeros(1,L(2));  
 
-for i = 1:L(2)-1   %the L(2) entry will always have 0 error because all information is passed to everyone in that case
+for i = 1:L(2)-1   %the L(2) error entry will always have 0 error because all information is passed to everyone in that case
     error(i) = ConnectionTester2(L,[i 1],runs);
 end
 

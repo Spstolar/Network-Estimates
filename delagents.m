@@ -9,8 +9,20 @@ function[x] = delagents(C, a)
 
 repeat = 0;
 
-if length(a) > 1
-    for j = 1:length(a)-1
+if length(a) == 2
+    if a(1) == a(2)
+        repeat = 1;
+    end
+end
+
+if length(a) >1
+    if a(length(a) - 1) == a(length(a))
+        repeat = 1;
+    end
+end
+
+if length(a) > 2
+    for j = 1:length(a)-2
         for k = j+1:length(a)
             if a(j) == a(k)
                 repeat = 1;

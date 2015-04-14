@@ -33,12 +33,12 @@ end
 
 %define the info matrix for the second layer
 for k = 1:L(2)
-    for j = 1:N
-        I(j,k + L(1)) = TC(j ,k+L(1))./sum(TC(:,k+L(1)));
+    for j = 1:L(1)  %only need to add numbers for the top layer entries
+        I(j,k + L(1)) = TC(j ,k+L(1))/sum(TC(:,k+L(1)));
     end
 end
 
-m = L(1);
+m = L(1); %layer induction constant
 
 
 %defining for the rest of the layers
@@ -48,7 +48,7 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
         %the matrix of layer 1 weights that layer k-1 is using
         P = I(1:L(1),m+1:m+L(k-1));
         
-        %the column for agent i of layer k telling us who the is receiving 
+        %the column for agent i of layer k telling us who it's receiving 
         %info from
         r = TC(m+1:m+L(k-1),v);
         
@@ -148,7 +148,7 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
     end
     
     
-    m = m + L(k-1);
+    m = m + L(k-1); %for layer induction
     
 
 end
