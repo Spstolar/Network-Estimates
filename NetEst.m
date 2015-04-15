@@ -94,7 +94,9 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
             [WF, removed] = desing(WF);
         end
 
-
+        if k == K
+            finalcov = WF;
+        end
 %          WF might have been resized;
         inR = R;
         [R, ~] = size(WF);
@@ -159,7 +161,9 @@ end
 % inv(WF)
 % sum(sum(inv(WF)))
 % 1/sum(sum(inv(WF)))
-var = 1/sum(sum(inv(WF)))  %determinant for the final agent's covariance matrix
+% finalcov
+% inv(finalcov)
+var = 1/sum(sum(inv(finalcov)));  %determinant for the final agent's covariance matrix
 
         
 x = I;

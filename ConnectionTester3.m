@@ -8,8 +8,8 @@ error = 0;
 TrialErrors = zeros(1,runs);
 
 for r = 1:runs
-    V = ConnectGen(L,ConnNums)
-    [InfoMatrix, runerror] = NetEst2(V,L)
+    V = ConnectGen(L,ConnNums);
+    [InfoMatrix, runerror] = NetEst(V,L);
 %     if runerror > 0
 %         runerror.2
 %         InfoMatrix(1:L(1),sum(L))

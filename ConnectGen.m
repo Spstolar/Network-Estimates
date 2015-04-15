@@ -1,7 +1,7 @@
 function[ C ] = ConnectGen(L, ConnNums)
 
-% input L = the vector of layers and ConnNums = how many connects each member of
-%the layer has to the next layer
+% input L = the vector of layers 
+%ConnNums = how many connects each member of the layer has to the next layer
 % e.g., L = [6 3 1];
 %       ConnNums = [2 1];
 % this gives 6 members of the top layer who each send down 2 connections
@@ -69,7 +69,15 @@ for j= 1: L(1)
             %connect it up randomly
         v = L(1)*ones(1,connectto(j)) + RandArray(connectto(j),L(2));
             for l = 1:connectto(j)
-                C( v(1,l) , j) = 1;
+                if C( v(1,l) , j) == 0
+                    C( v(1,l) , j) = 1;
+                else
+                    row2agent = v(1,l);
+                    while C(row2agent, j) == 1
+                        row2agent = randi(L(2))+L(1);                     
+                    end
+                    C( row2agent, j) = 1;
+                end
             end
     end
 end
