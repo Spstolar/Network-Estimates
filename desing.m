@@ -35,7 +35,7 @@ if repaired == 0
 end
 
 if repaired == 0
-    if R==3
+    if R == 3
         %see if deleting one row and column works
         %WF minus column and row 1
         WFm1 = WF;
@@ -49,7 +49,7 @@ if repaired == 0
         WFm3 = WF;
         WFm3(3,:) = [];
         WFm3(:,3) = [];
-        check = (singcheck(WFm1) == 1)+(singcheck(WFm2) == 10)+(singcheck(WFm3) == 1);
+        check = (singcheck(WFm1) == 1)+(singcheck(WFm2) == 1)+(singcheck(WFm3) == 1);
         if check == 3
             %del 2 at a time
             %since all that is left is the nonzero diagonal entry, the choice is irrelevant

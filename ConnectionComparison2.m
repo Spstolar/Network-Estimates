@@ -7,22 +7,22 @@
 L = [15 5 1];
 runs = 400;
 
-opt = (1/L(1))*ones(1,L(2));
+opt = (1/L(1))*ones(1,86);
 %general
 
 %function[ x ] = ConnectionComparison(L, runs)
-numofconnections = 1:L(2);
-error = zeros(1,L(2));  
+numofconnections = 15:100;
+error = zeros(1,86);  
 
-for i = 1:L(2)-1   
-    error(i) = ConnectionTester3(L,[i 1],runs)
+for i = 1:86
+    error(i) = ConnectionTester4(L,i+14,runs)
 end
 
 error(L(2)) = opt(1); %basically assuming this for now until the algorithm is trimmed enough to handle larger networks, this is fine to assume because it is the assumption that all information is received by all second layer agents
 
 error;
 plot(numofconnections,error,numofconnections, opt)
-legend('average error per connections out of each top layer agent','optimum estimate')
+legend('probable number of connections out of the first layer','optimum estimate')
 title(L)
 %x = 
     

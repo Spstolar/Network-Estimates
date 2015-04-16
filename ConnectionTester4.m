@@ -1,17 +1,17 @@
-function[ z ] = ConnectionTester3(L,ConnNums,runs)
+function[ z ] = ConnectionTester4(L,totalconnections,runs)
 
-% input L = the vector of layers and ConnNums = how many connects each member of
-%the layer has to the next layer
+% input L = the vector of layers and totalconnections = how many connects should go
+% out from the top layer
 
 
 error = 0;
 TrialErrors = zeros(1,runs);
 
 for r = 1:runs
-    V = ConnectGen(L,ConnNums)
+    V = ConnectGen2(L,totalconnections);
     [InfoMatrix, runerror] = NetEst(V,L);
-    InfoMatrix(:,sum(L))
-    runerror
+%     InfoMatrix(:,sum(L))
+%     runerror
 %     if runerror > 0
 %         runerror.2
 %         InfoMatrix(1:L(1),sum(L))

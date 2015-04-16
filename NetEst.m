@@ -85,9 +85,10 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
         %WF is the RxR covariance matrix, which may be singular
         %Check if it's singular, and if it is de-singularize it, where we
         %keep track of what we removed from WF
-     
-        %isitsing = singcheck(WF);
-        %cond(WF);                  %<-- for debugging
+        
+%         rank(WF)
+%         isitsing = singcheck(WF);
+%         cond(WF);                  %<-- for debugging
         
         
         if singcheck(WF) == 1
