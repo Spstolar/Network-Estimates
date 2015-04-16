@@ -4,7 +4,7 @@
 %first layer has to the second
 
 %example specific
-L = [15 10 1];
+L = [20 15 1];
 runs = 400;
 
 opt = (1/L(1))*ones(1,L(2));
