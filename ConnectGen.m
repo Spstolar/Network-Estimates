@@ -51,7 +51,7 @@ for j = 1:length(L)-1  %work from bottom layer up to the second layer
         
         if connectto(thisagent) > 0    %check if the agent has any connections required
             %connect it up randomly
-            v = sum(L(1:thislayer))*ones(1,connectto(thisagent)) + RandArray(connectto(thisagent),L(thislayer+1));
+            v = sum(L(1:thislayer))*ones(1,connectto(thisagent)) + sort(randperm(L(thislayer+1),connectto(thisagent)));
             for l = 1:connectto(thisagent)
                 C( v(1,l) , thisagent) = 1;
             end
@@ -67,7 +67,7 @@ end
 for j= 1: L(1)
     if connectto(j) > 0    %check if the agent has any connections required
             %connect it up randomly
-        v = L(1)*ones(1,connectto(j)) + RandArray(connectto(j),L(2));
+        v = L(1)*ones(1,connectto(j)) + sort(randperm(L(2),connectto(j)));
             for l = 1:connectto(j)
                 if C( v(1,l) , j) == 0
                     C( v(1,l) , j) = 1;
