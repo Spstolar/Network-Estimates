@@ -11,10 +11,8 @@ WF = B;
 det(B);
 
 
-
-if singcheck(WF) == 1
+if (sum(eig(WF) == 0) > 0) == 1
     repaired = 0;
-    WF;
 else
     repaired = 1;
     y = 0;
@@ -37,34 +35,36 @@ end
 if repaired == 0
     if R==3
         %see if deleting one row and column works
-        check = singcheck(delagents(WF, 1))+singcheck(delagents(WF, 2))+singcheck(delagents(WF, 3));
+        %WF minus column and row 1
+        WFm1 = WF;
+        WFm1(1,:) = [];
+        WFm1(:,1) = [];
+        %WF minus column and row 2
+        WFm2 = WF;
+        WFm2(2,:) = [];
+        WFm2(:,2) = [];
+        %WF minus column and row 1
+        WFm3 = WF;
+        WFm3(3,:) = [];
+        WFm3(:,3) = [];
+        check = (sum(eig(WFm1) == 0) > 0)+(sum(eig(WFm2) == 0) > 0)+(sum(eig(WFm3) == 0) > 0);
         if check == 3
             %del 2 at a time
-            %since all that is left is the diagonal entry, the choice is irrelevant
-            WF = delagents(WF,[1 2]);
+            %since all that is left is the nonzero diagonal entry, the choice is irrelevant
+            %We choose to delete columns and rows 1 and 2
+            WF(:,[1 2])= [];
+            WF([1 2],:) = [];
             y = [1 2];
-%             if singcheck(delagents(WF,[1 2])) == 0 
-%                 WF = delagents(WF,[1 2]);
-%                 y = [1 2];
-%             else
-%                 if singcheck(delagents(WF,[2 3])) == 0
-%                     WF = delagents(WF,[2 3]);
-%                     y = [2 3];
-%                 else
-%                     WF = delagents(WF,[1 3]);
-%                     y = [1 3];
-%                 end
-%             end
         else
-            if singcheck(delagents(WF,1)) == 0
-                WF = delagents(WF,1);
+            if (sum(eig(WFm1) == 0)>0) == 0
+                WF = WFm1;
                 y = 1;
             else
-                if singcheck(delagents(WF, 2)) == 0
-                    WF = delagents(WF, 2);
+                if (sum(eig(WFm1) == 0)>0) == 0
+                    WF = WFm2;
                     y = 2;
                 else
-                    WF = delagents(WF,3);
+                    WF = WFm3;
                     y = 3;
                 end
             end
@@ -81,10 +81,13 @@ end
 if repaired == 0
     for f = 1:R
         if repaired == 0
-            if singcheck(delagents(WF, f)) == 0
-                WF = delagents(WF, f);
+            WF(f,:) = [];
+            WF(:,f) = [];
+            if (sum(eig(WF) == 0) > 0) == 0
                 repaired = 1;
                 y = f;
+            else
+                WF = B;
             end
         end
     end
@@ -113,30 +116,32 @@ if repaired == 0
         
         %while det(WF) == 0
         if repaired == 0
-            a = ones(1,e);
-            for s = 1:e
-                a(s) = s;
-            end
-            while a(e)+a(e-1) < 2*R
-                WF = delagents(WF,a);
-                if size(WF) == size(B) %skip redudant deletions
-                    a = arrayincrement(a,R);
-                else                  
-                    if singcheck(WF) == 1
-                        a = arrayincrement(a,R);
+            %go through all possible deletions of a subset of e agents
+            combinations = nchoosek(1:R,e);
+            for poss = 1:length(combinations) %check the combinations one at a time
+                if repaired == 0                    
+                    %if the matrix was still singular, check next comb
+                    WF(:,combinations(poss,:)) = [];
+                    WF(combinations(poss,:),:) = [];
+                    if (sum(eig(WF) == 0) > 0) == 1
                         WF = B;
                     else
                         repaired = 1;
-                        y = sort(a);   %ordering the agents we removed
-                        a(e) = R*e+3;    %ensuring the end of the while loop
+                        y = combinations(poss,:);   %ordering the agents we removed
                     end
+                else
+                    %no check required, we are done and we can finish out
+                    %the for-loop. This will weight selections toward
+                    %deleting lower indices though
+                  
                 end
             end
+
         end
             
     end
 end
 
 x = WF;
-%y;
+
 

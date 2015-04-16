@@ -1,5 +1,6 @@
 function[ x ] = RandArray(c,N)
 
+%this is just sort(randperm(N,c))
 
 %create a c-element array drawing numbers from 1 to N
 
