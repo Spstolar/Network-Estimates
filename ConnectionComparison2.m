@@ -7,18 +7,19 @@
 L = [15 5 1];
 runs = 400;
 
-opt = (1/L(1))*ones(1,86);
+maxtotalconnections = L(1)*L(2) - L(1);
+opt = (1/L(1))*ones(1,1+maxtotalconnections);
 %general
 
 %function[ x ] = ConnectionComparison(L, runs)
-numofconnections = 15:100;
-error = zeros(1,86);  
+numofconnections = 1:1+maxtotalconnections;
+error = zeros(1,1+maxtotalconnections);  
 
-for i = 1:86
-    error(i) = ConnectionTester4(L,i+14,runs)
+for i = 1:1+maxtotalconnections
+    error(i) = ConnectionTester4(L,i-1,runs)
 end
 
-error(L(2)) = opt(1); %basically assuming this for now until the algorithm is trimmed enough to handle larger networks, this is fine to assume because it is the assumption that all information is received by all second layer agents
+
 
 error;
 plot(numofconnections,error,numofconnections, opt)

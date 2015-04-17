@@ -1,4 +1,4 @@
-function[ C ] = ConnectGen2(L, totalconnections)
+function[ C ] = ConnectGen2(L, extraconnections)
 
 % input L = the vector of layers 
 %totalconnections = how many connects the top layer should send to the
@@ -12,39 +12,54 @@ function[ C ] = ConnectGen2(L, totalconnections)
 
 
 C = zeros(sum(L),sum(L));
+totalconnections = extraconnections + L(1);
 
-% connectto = 0;
-% 
-% for i = 1:length(L)-1
-%     connectto = [totalconnections(length(L)-i)*ones(1,L(length(L)-i)) connectto];
-% end
+minconnected = ones(L(1),1);
 
 
 %First add the connections from the second layer to the last.
 C(sum(L),L(1)+1:L(1)+L(2)) = 1;
 
-%First we preconnection from the second layer up to the first to make sure no agent is left
-%out.
+%First we preconnection from the second layer up to the first to make sure
+%that no agent in the second layer is left out.
+
 %Right now this will have the effect of adding more than totalconnections
 
 for j = 1:L(2)
+    %randomly pick one of the agents in the first layer
     pick = randi(L(1));
+    %assign the connection from that first layer agent to our agent
     C(L(1)+j, pick) = 1;
+    minconnected(pick,1) = 0;
 end
 
-%Now finish the layer 1 connections.
+%Now make sure everyone in the first layer is connected:
+
+C(1:L(1),L(1)+1:L(1)+L(2)) = minconnected
+%Next, we throw up extraconnections.
+
+toconnect = sort(perm(L(1)*L(2),extraconnections);
+for i = 1:extraconnections;
+    C(mod(toconnect(i),L(2)),ceil(toconnect(i)/L(2))) = 1;
+end
+
 for i = 1:L(1)
     if sum(C(:,i)) == 0
         pick = L(1) + randi(L(2));
         C(pick, i) = 1;
-        totalconnections = totalconnections - 1;
     end
 end
 
-if totalconnections > 0
-    for k = 1:totalconnections
+if extraconnections > 0
+    for k = 1:extraconnections
         pick1 = randi(L(1));
+        while sum(C(:,pick1)) == L(1) %if the agent is fully connected, pick a different one
+            pick1 = randi(L(1));
+        end
         pick2 = L(1) + randi(L(2));
+        while C(pick2,pick1) == 1
+            pick2 = L(1) + randi(L(2));
+        end
         C(pick2,pick1) = 1;  %note/caution for future that this ignores the fact that this may already be a connection
     end
 end
