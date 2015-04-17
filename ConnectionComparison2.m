@@ -7,7 +7,7 @@
 L = [15 5 1];
 runs = 400;
 
-maxtotalconnections = L(1)*L(2) - L(1);
+maxtotalconnections = L(1)*L(2) - L(1)-L(2);
 opt = (1/L(1))*ones(1,1+maxtotalconnections);
 %general
 
@@ -23,7 +23,8 @@ end
 
 error;
 plot(numofconnections,error,numofconnections, opt)
-legend('probable number of connections out of the first layer','optimum estimate')
+legend('average estimate for this many connections','optimum estimate')
+xlabel('minimum number of extra connections from the first layer')
 title(L)
 %x = 
     
