@@ -125,12 +125,8 @@ for k = 3:K   %starting at layer k = 3 and going till layer k = K the bottom
         b = (ones(1,R)/WF)*ones(R,1); % the sum of the entries of the inverse of the reduced covariance matrix
 
         
-        weights = (ones(1,R)/WF)/b;  % this comes out of min. var. est. 
-                                     % theory for how to get the optimal 
-                                     % estimate given covaried inputs
-        
-        fillw = zeros(1,inR);  % now turn the weights for the independent 
-                               % inputs into weights for all inputs
+        weights = (ones(1,R)/WF)/b;  % this comes out of min. var. est. theory
+        fillw = zeros(1,inR);
         
         %we have to add in some zeros if we reduced the covariance matrix
         if R < inR
