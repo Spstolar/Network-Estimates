@@ -1,3 +1,6 @@
+# Network-Estimates Update No.3 7.20.15
+Going through to upgrade to more than 3 layers.
+
 # Network-Estimates Update No.2 4.5.15
 Working on issue of singular covariance matrix. Have a fix, but it doesn't seem to be stable. One of the main issues with this is determining when the matrix is singular. cond(A) alone doesn't work because the result can be different than Inf and still be inputted singular matrices.
 
