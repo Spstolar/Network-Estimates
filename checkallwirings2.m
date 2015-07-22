@@ -5,19 +5,7 @@ function[ x ] = checkallwirings(L)
 numAgents = sum(L);
 layers = length(L);
 
-%goal: rewrite in terms of going through all the connection matrix
-%possibilites. Converting the base-L(1) run through to a binary type output
 
-% more like run the topleft L(2)xL(1) submatrix of the connection matrix
-% through all of it's possibilities, discarding the ones who have zero
-% columns
-% the submatrix is really just a binary number whose
-% ith entry is whether the floor(i/L(1)) agent sends info to the
-% mod(i,L(1)) agent
-
-%This will give 2^(L(1)*L(2)) iterations for the three layer
-
-% Product 2^(L(i)*L(i+1)) iterations for the general.
 
 fileID = fopen('result.txt','w');
 formatSpecHeader = 'The layout is %1.0f - %1.0f - %1.0f.\n';
