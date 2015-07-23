@@ -2,7 +2,7 @@ function[ y ] = fixedFirstLayerForMulti( firstAgs )
 %plots the percentage of optimal wirings sampling from a three layer
 %network with differing amounts of second layer agents
 
-samples = 2000;
+samples = 2001;
 numInSecond = floor(1*firstAgs);
 numInThird = max(floor(.5*firstAgs)+1,4);
 optPer = zeros(numInThird,numInSecond);

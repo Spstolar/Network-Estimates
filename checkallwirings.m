@@ -31,7 +31,7 @@ m = 0; %for layer induction
 for i = 1:(2^(L(1)*L(2)))  % run over the possible connection bInts
 %for i = 1:8  % run over the possible connection bInts
     tempConn = convertToConnection(str2num(dec2bin(i)),L(2),L(1)); %convert j to bInt to connections
-    if prod(sum(tempConn,2))*prod(sum(tempConn)) == 0    %check connections for bad
+    if prod(sum(tempConn,2)) == 0    %check connections for bad
         badConn =1;
         skipped = skipped +1;
     else
