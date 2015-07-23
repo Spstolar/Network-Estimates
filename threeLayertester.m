@@ -4,7 +4,7 @@ l1 = L(1);
 l2 = L(2);
 l3 = L(3);
 
-filename = strcat(int2str(L(1)),'-',int2str(L(2)),'-',int2str(L(3)),'w',int2str(k),'.txt');
+filename = strcat('wiringTests\\',int2str(L(1)),'-',int2str(L(2)),'-',int2str(L(3)),'w',int2str(k),'.txt');
 
 
 fileID = fopen(filename,'w');
@@ -21,7 +21,7 @@ fprintf(fileID,'Optimal: %hd \n',opt);
 fprintf(fileID,'Nonoptimal: %hd \n',nonopt);
 fclose(fileID);
 
-opt
-nonopt
+opt;
+nonopt;
 
 end

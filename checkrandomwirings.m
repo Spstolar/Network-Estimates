@@ -29,8 +29,11 @@ totalruns = 0;
 m = 0; %for layer induction
 
 for i = 1:k  % run this many samples
-    wiringInt = randi((2^(L(1)*L(2))));
-    tempConn = convertToConnection(str2num(dec2bin(wiringInt)),L(2),L(1)); %convert j to bInt to connections
+    agentwirings = zeros(1, L(1));
+    for j = 1:L(1)
+        wiringInt = randi((2^(L(2)))-1);
+        tempConn(:,j) = convertToConnection(str2num(dec2bin(wiringInt)),L(2),1); %convert j to bInt to connections
+    end
     if prod(sum(tempConn,2))*prod(sum(tempConn)) == 0    %check connections for bad
         badConn =1;
         skipped = skipped +1;
@@ -46,30 +49,6 @@ for i = 1:k  % run this many samples
     end
     totalruns = totalruns +1;
 end
-
-% for i = 1:layers-2 % going over the layers we will have to connect randomly
-%     for j = 1:(2^(L(i)*L(i+1)))  % run over the possible connection bInts
-%         if badConn == 0
-%             tempConn = convertToConnection(str2num(dec2bin(j)),L(i+1),L(i)) %convert j to bInt to connections
-%             if prod(sum(tempConn,2)) == 0    %check connections for bad
-%                 badConn =1;
-%             else
-%                 connMat(m+L(i)+1:m+L(i)+L(i+1),m+1:m+L(i)) = tempConn;        %if not bad add it to the connMat
-%             end
-%         
-%         end
-%     end
-%     
-%     if badConn == 0
-%         %run NetEst
-%     else
-%         skipped = 1 + skipped;
-%     end
-%     
-%     badConn = 0;
-%     totalruns = totalruns + 1;
-% end
-
 
 %skipped = totalruns - opt - nonopt
 x = opt/(opt+nonopt);
