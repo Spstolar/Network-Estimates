@@ -1,7 +1,7 @@
 function[ x ] = multiLayerTester( L , k )
 
 
-filename = strcat('wiringTests\\',int2str(L(1)),'-',int2str(L(2)),'-',int2str(L(3)),'w',int2str(k),'.txt');
+filename = strcat('wiringTests\\',num2str(L),'.txt');
 
 
 fileID = fopen(filename,'w');

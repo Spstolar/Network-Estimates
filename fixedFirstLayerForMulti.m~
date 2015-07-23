@@ -42,20 +42,15 @@ for i = 1: prod(S)/S(1)
     
     runL = L;
     
-    %to avoid unnecessary computation do [a 1 1] instead of [a 1 * * *]
     for k = 2:layers-1
-        if runL(k) == 1
-            runL = [L(1:k) 1];
-            break
-        end
-    end
-           
-    optPer = multiLayerTester(runL, samples)
+        if runL(k) = 1
+            runL = 
     
+    L
+    optPer = multiLayerTester(L, samples)
     for i = 1:layers
         fprintf(csvFileID,strcat(num2str(L(i)),','));
     end
-    
     result = strcat('[',num2str(L),'] = ',num2str(optPer),'\n');
     fprintf(csvFileID,strcat(num2str(optPer),','));
     fprintf(fileID,result);
