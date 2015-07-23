@@ -8,7 +8,7 @@ optPer = zeros(1,numInSecond);
 %optPer(1) = 1;  %check the bug here that makes everything skipped
 
 for i = 1:numInSecond
-    optPer(i) = threeLayertester([firstAgs i 1], samples);
+    optPer(i) = multiLayerTester([firstAgs i 1], samples);
 end
 
 y = 0;
