@@ -40,22 +40,25 @@ for i = 1: prod(S)/S(1)
         end
     end
     
-    runL = L;
     
     %to avoid unnecessary computation do [a 1 1] instead of [a 1 * * *]
     for k = 2:layers-1
-        if runL(k) == 1
-            runL = [L(1:k) 1];
+        if L(k) == 1
+            skip = 1;
+            'skipped'
             break
         end
     end
           
     L
-    if L(2) == 1
-        optPer = 1
+    
+    if skip == 0
+        optPer = multiLayerTester(L, samples)
     else
-        optPer = multiLayerTester(runL, samples)
+        optPer = -1
     end
+    
+
     
     for i = 1:layers
         fprintf(csvFileID,strcat(num2str(L(i)),','));
@@ -65,6 +68,7 @@ for i = 1: prod(S)/S(1)
     fprintf(csvFileID,strcat(num2str(optPer),','));
     fprintf(fileID,result);
     
+    skip = 0;
 end
 
 fprintf(csvFileID,'\b');

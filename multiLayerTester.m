@@ -1,11 +1,18 @@
 function[ x ] = multiLayerTester( L , k )
 
 
-filename = strcat('wiringTests\\',num2str(L),'.txt');
+Lstring = '';
+for i = 1:length(L)-1
+    Lstring = strcat(Lstring,num2str(L(i)),'-');
+end
+
+Lstring = strcat(Lstring,'1');
+
+filename = strcat('multi',Lstring,'.txt');
 
 
 fileID = fopen(filename,'w');
-fprintf(fileID,strcat('The layout is ', L, '.\n'));
+fprintf(fileID,strcat('The layout is ', Lstring, '.\n'));
 
 [ x, opt, nonopt, skipped ] = checkrandomwirings(L,k);
 
