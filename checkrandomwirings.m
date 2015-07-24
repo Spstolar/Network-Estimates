@@ -38,7 +38,7 @@ for i = 1:s  % run this many samples
     
     
     if badConn == 0
-        [~, vari] = NetEst( connMat , L);
+        [~, vari] = NetEst2( connMat , L);
         diff = vari - 1/L(1);
         if (diff)^2 > .0000001
             nonopt = nonopt + 1;

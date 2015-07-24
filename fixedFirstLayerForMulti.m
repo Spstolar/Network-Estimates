@@ -49,8 +49,13 @@ for i = 1: prod(S)/S(1)
             break
         end
     end
-           
-    optPer = multiLayerTester(runL, samples)
+          
+    L
+    if L(2) == 1
+        optPer = 1
+    else
+        optPer = multiLayerTester(runL, samples)
+    end
     
     for i = 1:layers
         fprintf(csvFileID,strcat(num2str(L(i)),','));
