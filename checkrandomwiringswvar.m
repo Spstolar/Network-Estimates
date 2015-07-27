@@ -1,4 +1,4 @@
-function[ x, opt, nonopt, skipped ] = checkrandomwiringswvar(L, s)
+function[ x, opt, nonopt, skipped, avgvardiff ] = checkrandomwiringswvar(L, s)
 %takes the layer breakdown and runs NetEst on k possible connections
 %of those layers
 
@@ -12,7 +12,8 @@ badConn = 0; % used when we have an agent not receiving info in some layer
 opt = 0;  % total number of optimal wirings
 nonopt = 0;  % '' nonoptimal wirings
 m = 0; %for layer induction
-
+totalvar = 0;
+avgvardiff = 0;
 
 for i = 1:s  % run this many samples
     for k = 1:layers-2
@@ -42,6 +43,7 @@ for i = 1:s  % run this many samples
         diff = vari - 1/L(1);
         if (diff)^2 > .0000001
             nonopt = nonopt + 1;
+            totalvar = totalvar + vari;
         else
             opt = opt + 1;
         end
@@ -57,6 +59,7 @@ if opt + nonopt == 0
     x = 0;
 else
     x = opt/(opt+nonopt);
+    avgvardiff = totalvar/nonopt;
 end
 
 end

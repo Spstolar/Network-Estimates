@@ -26,7 +26,7 @@ for i = 1:layers
 end
 
 
-fprintf(csvFileID,'optPercent,');
+fprintf(csvFileID,'optPercent,','avgvardiff,');
 
 
 for i = 1: prod(S)/S(1)
@@ -53,9 +53,10 @@ for i = 1: prod(S)/S(1)
     L
     
     if skip == 0
-        optPer = multiLayerTester(L, samples)
+        [optPer, avgvardiff] = multiLayerTesterwvar(L, samples)
     else
         optPer = -1
+        avgvardiff =0;
     end
     
 
@@ -64,8 +65,8 @@ for i = 1: prod(S)/S(1)
         fprintf(csvFileID,strcat(num2str(L(i)),','));
     end
     
-    result = strcat('[',num2str(L),'] = ',num2str(optPer),'\n');
-    fprintf(csvFileID,strcat(num2str(optPer),','));
+    result = strcat('[',num2str(L),'] = ',num2str(optPer),' avgvardiff = ',num2str(avgvardiff),'\n');
+    fprintf(csvFileID,strcat(num2str(optPer),',',num2str(avgvardiff),','));
     fprintf(fileID,result);
     
     skip = 0;
