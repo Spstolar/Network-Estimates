@@ -1,5 +1,5 @@
 function[ x, opt, nonopt, skipped ] = checkrandomwirings(L, s)
-%takes the layer breakdown and runs NetEst on k possible connections
+%takes the layer breakdown and runs NetEst on s possible connections
 %of those layers
 
 %% Some Constants

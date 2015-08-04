@@ -1,4 +1,4 @@
-function[ y ] = fixedFirstLayerForMultiwvar( S )
+function[ y ] = fixedFirstLayerForMulti( S )
 %S is the vector of the max number of agents you want in each layer
 %this function plots the percentage of optimal wirings sampling
 %from a network with S(1) agents in the top layer and fewer than or equal
@@ -12,9 +12,6 @@ layers = length(S);
 optPer = 0;
 L = ones(1, layers);
 L(1) = firstAgs;
-L(layers) = 1;
-skip = 0;
-
 
 
 filename = strcat(num2str(S),'.txt');
@@ -27,38 +24,20 @@ for i = 1:layers
 end
 
 
-fprintf(csvFileID,'optPercent,','avgvardiff,');
+fprintf(csvFileID,'optPercent,');
 
 
-for i = 1: prod(S)/S(1)
+for i = 2: S(2)
     %cycle through
-    for j = 2:layers
-        if L(j) == S(j)
-            L(j) = 1;
-        else
-            L(j) = L(j) + 1;
-            break
-        end
-    end
+    L(2) = i;
     
     
-    %to avoid unnecessary computation do [a 1 1] instead of [a 1 * * *]
-    for k = 2:layers-1
-        if L(k) == 1
-            skip = 1;
-            'skipped'
-            break
-        end
-    end
-          
+    
+    
     L
     
-    if skip == 0
-        [optPer, avgvardiff] = multiLayerTesterwvar(L, samples)
-    else
-        optPer = -1
-        avgvardiff =0;
-    end
+    optPer = multiLayerTester(L, samples)
+    
     
 
     
@@ -66,18 +45,17 @@ for i = 1: prod(S)/S(1)
         fprintf(csvFileID,strcat(num2str(L(i)),','));
     end
     
-    result = strcat('[',num2str(L),'] = ',num2str(optPer),' avgvardiff = ',num2str(avgvardiff),'\n');
-    fprintf(csvFileID,strcat(num2str(optPer),',',num2str(avgvardiff),','));
+    result = strcat('[',num2str(L),'] = ',num2str(optPer),'\n');
+    fprintf(csvFileID,strcat(num2str(optPer),','));
     fprintf(fileID,result);
-    
-    skip = 0;
+   
 end
 
 fprintf(csvFileID,'\b');
 fclose(fileID);
 fclose(csvFileID);
 
-y = 0;
+y = optPer;
 
 %
 % plot(1:numInSecond,optPer(2,:),1:numInSecond,optPer(3,:),1:numInSecond,optPer(4,:))
