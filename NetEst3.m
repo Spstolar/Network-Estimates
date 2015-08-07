@@ -8,7 +8,7 @@ function [ opt ] = NetEst3( C )
 
 [~, layer1] = size(C);
 
-if( rank(C) < rank( [C ; ones(1,layer1)] ) )
+if( rank(transpose(C)) < rank( transpose([C ; ones(1,layer1)] )) )
     opt = 0;
 else
     opt = 1;

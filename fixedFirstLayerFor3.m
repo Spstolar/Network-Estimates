@@ -10,7 +10,6 @@ firstAgs = S(1);
 layers = length(S);
 % optPer = zeros(numInThird,numInSecond);
 optPer = 0;
-L = ones(1, layers);
 L(1) = firstAgs;
 
 
@@ -27,29 +26,25 @@ end
 fprintf(csvFileID,'optPercent,');
 
 
-for i = 2: S(2)
-    %cycle through
-    L(2) = i;
+
     
     
+    S
     
-    
-    L
-    
-    optPer = multiLayerTester(L, samples)
+    optPer = multiLayerTester(S, samples)
     
     
 
     
     for i = 1:layers
-        fprintf(csvFileID,strcat(num2str(L(i)),','));
+        fprintf(csvFileID,strcat(num2str(S(i)),','));
     end
     
-    result = strcat('[',num2str(L),'] = ',num2str(optPer),'\n');
+    result = strcat('[',num2str(S),'] = ',num2str(optPer),'\n');
     fprintf(csvFileID,strcat(num2str(optPer),','));
     fprintf(fileID,result);
    
-end
+
 
 fprintf(csvFileID,'\b');
 fclose(fileID);
