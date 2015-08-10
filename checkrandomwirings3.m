@@ -1,6 +1,7 @@
-function[ x, opt, nonopt, skipped ] = checkrandomwirings(L, s)
-%takes the layer breakdown and runs NetEst on s possible connections
-%of those layers
+function[ x, opt, nonopt, skipped ] = checkrandomwirings3(L, s, p)
+%takes the 3 layer breakdown and runs NetEst on s possible connections
+%of those layers, now connecting using the binomial distribution with prob
+%p
 
 %% Some Constants
 numAgents = sum(L);

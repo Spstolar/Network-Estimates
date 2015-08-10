@@ -1,4 +1,4 @@
-function[ x ] = multiLayerTester( L , k )
+function[ x ] = multiLayerTester3( L , k )
 
 
 Lstring = '';

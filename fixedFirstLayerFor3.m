@@ -1,4 +1,4 @@
-function[ y ] = fixedFirstLayerForMulti( S )
+function[ y ] = fixedFirstLayerFor3( S )
 %S is the vector of the max number of agents you want in each layer
 %this function plots the percentage of optimal wirings sampling
 %from a network with S(1) agents in the top layer and fewer than or equal
