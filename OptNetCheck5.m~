@@ -1,4 +1,4 @@
-function [ opt ] = NetEst4( C )
+function [ opt, averageNonoptMse, averageNonoptVar ] = OptNetCheck5( C, L )
 
 %% Explanation
 %NetEst4 takes thematrix of connections from layer 1 to layer 2 C
@@ -19,11 +19,15 @@ if (prod(sum(C)) > 0)
         opt = 0;
     else
         opt = 1;
+        nonoptVar, nonopt
     end
 else
     opt = 0;
 end
 
+if opt == 0
+    %run estimate calculation and return mse and var
+end
 
 
 

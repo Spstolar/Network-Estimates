@@ -1,0 +1,37 @@
+function[ x , averageNonoptMse, averageNonoptVar, averageTotalMse, averageTotalVar] = checkrandomwirings5(L, s, p)
+%takes the 3 layer breakdown and runs NetEst on s possible connections
+%of those layers, now connecting using the binomial distribution with prob
+%p
+
+%% Some Constants
+opt = 0;  % total number of optimal wirings
+nonopt = 0;  % '' nonoptimal wirings
+averageNonOptVar = 0;
+averageNonOptMse = 0;
+
+for i = 1:s  % run this many samples
+    
+    connMat = double( rand(L(2), L(1)) < p);
+    
+    [resultForC, averageNonoptMse, averageNonoptVar] = [0, averageNonoptMse, averageNonOptVar] + OptNetCheck5(connMat, L);
+    opt = opt + resultForC;
+    nonopt = nonopt + 1 - resultForC;
+    
+end
+
+x = opt/(opt+nonopt);
+
+if nonopt > 0
+    averageTotalVar = (averageNonoptVar/(nonopt + opt) + opt*((1/L(1))/(nonopt + opt));
+    averageNonoptMse = averageNonoptMse/nonopt;
+    averageTotalMse = 
+    averageNonOptVar = averageNonOptVar/nonopt;
+else
+    averageNonOptVar = 1/L(1);
+    averageNonOptMse = 0;
+    averageTotalVar = 1/L(1);
+    averageTotalMse = 0;
+end
+    
+
+end

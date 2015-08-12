@@ -1,4 +1,4 @@
-function [ opt ] = NetEst4( C )
+function [ opt, nonoptMse, nonoptVar ] = OptNetCheck5( C, L )
 
 %% Explanation
 %NetEst4 takes thematrix of connections from layer 1 to layer 2 C
@@ -24,6 +24,14 @@ else
     opt = 0;
 end
 
+if opt == 0
+    %run estimate calculation and return mse and var
+    [nonoptVar, nonoptMse] = NetEst5(C, L);
+    
+else
+    nonoptVar = 0;
+    nonoptMse = 0;
+end
 
 
 
