@@ -6,18 +6,26 @@ function[ y ] = ThreeLayerTestsPMSE( p )
 
 
 samples = 2000;
-optPer = zeros(9,1);
+%optPer = zeros(9,1);
+optPer = zeros(1,9);
+avgNonoptMse = zeros(1,9);
+avgMse = zeros(1,9);
 
+for j = 2:10
 for i = 2:10
-    optPer(i-1) = checkrandomwirings4([i 2 1], samples, p);
+    [optPer(i-1),avgNonoptMse(i-1),~,avgMse(i-1),~] = checkrandomwirings5([i j 1], samples, p);
 end
 
-y = optPer;
+y = [optPer; avgNonoptMse; avgMse];
 
 
-plot(2:10,optPer)
+csvwrite(strcat(int2str(j),'inL2.dat'),transpose(y))
 
-plot(2:10,optPer)
+end
+
+
+
+%bar(y,'stacked')
 
 
 % legend('2 third layer agents','3 third layer agents','four third layer agents')
