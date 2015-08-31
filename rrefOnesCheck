@@ -1,0 +1,7 @@
+function[ y ] = rrefOnesCheck( A, n )
+
+
+
+y = 0;
+
+rref(A)

@@ -1,0 +1,8 @@
+function[ y ] = rankOnesCheck( A, n )
+
+
+if (rank(A) < rank([A; ones(1,n)])
+    y = 0;
+else
+    y = 1;
+end
